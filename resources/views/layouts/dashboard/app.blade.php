@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ LaravelLocalization::getCurrentLocaleDirection() }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -53,6 +53,22 @@
                             </div>
                         </div>
                     </form>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a href="#" data-toggle="dropdown" class="nav-link">
+                    <i class="fas fa-language"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <span class="dropdown-item dropdown-header" style="text-transform: capitalize;">{{ __('site.selectLanguage') }}</span>
+                    <div class="dropdown-divider"></div>
+                    @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                        <a rel="alternate" class="dropdown-item" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                            <i class="fas fa-envelope mr-2"></i> {{ $properties['native'] }}
+                        </a>
+                        <div class="dropdown-divider"></div>
+                    @endforeach
                 </div>
             </li>
 
@@ -184,6 +200,6 @@
 <!-- AdminLTE App -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/js/demo.min.js"></script>
+{{--<script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/js/demo.min.js"></script>--}}
 </body>
 </html>
